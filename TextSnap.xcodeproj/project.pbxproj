@@ -1,0 +1,359 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04E83AF2B48B3A6A693C4269 /* ToastController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EAAE4890272837662ED747 /* ToastController.swift */; };
+		10FA499C21C91E69A4A00132 /* ScreenCaptureOverlayWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2920787F92F9700F70BF72C3 /* ScreenCaptureOverlayWindow.swift */; };
+		1BFFA5058F046893F4289F84 /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1BCB4CFA8775A9AD92B8B21 /* HotkeyManager.swift */; };
+		4CB5610D2E0CEA31DBA2D760 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DCEB6BA95D77AF2F353CA61 /* AppDelegate.swift */; };
+		4E2B7695D02D4B3E45EAC372 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10D4170CFF9EAF1969828CAF /* Settings.swift */; };
+		62E049D21CACA6C6D4748E91 /* PreferencesWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6466B6417B3E8DDBFAB9ED1 /* PreferencesWindowController.swift */; };
+		9028522A13D52C4727EF5057 /* VisionAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9566537F172F45A4154C72F9 /* VisionAnalyzer.swift */; };
+		9B7527E6774F519AB62339F7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 35AEFF71D768F140A67B58B5 /* Assets.xcassets */; };
+		9CCF08D8D710195F85D58291 /* MenuBarManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF5D5C726F368C16DB9A77CC /* MenuBarManager.swift */; };
+		9E2A0E32FFA667428035A198 /* CaptureController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88C54B4FE29470BE74214AFC /* CaptureController.swift */; };
+		EBE7D8D25B6B6C935CBFAB47 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168846F960EDFADCECDBC6DB /* main.swift */; };
+		ECBC0C3005EEA2B886D63BAC /* SelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6B3172E46EEB0017AB1C0B9 /* SelectionView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		059955894FD110555452A9CA /* TextSnap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextSnap.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10D4170CFF9EAF1969828CAF /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		168846F960EDFADCECDBC6DB /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		18EAAE4890272837662ED747 /* ToastController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastController.swift; sourceTree = "<group>"; };
+		2920787F92F9700F70BF72C3 /* ScreenCaptureOverlayWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenCaptureOverlayWindow.swift; sourceTree = "<group>"; };
+		35AEFF71D768F140A67B58B5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		88C54B4FE29470BE74214AFC /* CaptureController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureController.swift; sourceTree = "<group>"; };
+		8DCEB6BA95D77AF2F353CA61 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9566537F172F45A4154C72F9 /* VisionAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionAnalyzer.swift; sourceTree = "<group>"; };
+		A1BCB4CFA8775A9AD92B8B21 /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		B6466B6417B3E8DDBFAB9ED1 /* PreferencesWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindowController.swift; sourceTree = "<group>"; };
+		B6B3172E46EEB0017AB1C0B9 /* SelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionView.swift; sourceTree = "<group>"; };
+		DF5D5C726F368C16DB9A77CC /* MenuBarManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarManager.swift; sourceTree = "<group>"; };
+		F75347ADFB07350B3F4CA7C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		425700A2E789DFC6C7EAD67A = {
+			isa = PBXGroup;
+			children = (
+				E0FBC660F114BDD38FF10391 /* TextSnap */,
+				C96245C751852F5DCCF54162 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5CD8779A7FBA6001D93EE380 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				35AEFF71D768F140A67B58B5 /* Assets.xcassets */,
+				F75347ADFB07350B3F4CA7C0 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		C96245C751852F5DCCF54162 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				059955894FD110555452A9CA /* TextSnap.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		E0FBC660F114BDD38FF10391 /* TextSnap */ = {
+			isa = PBXGroup;
+			children = (
+				8DCEB6BA95D77AF2F353CA61 /* AppDelegate.swift */,
+				88C54B4FE29470BE74214AFC /* CaptureController.swift */,
+				A1BCB4CFA8775A9AD92B8B21 /* HotkeyManager.swift */,
+				168846F960EDFADCECDBC6DB /* main.swift */,
+				DF5D5C726F368C16DB9A77CC /* MenuBarManager.swift */,
+				B6466B6417B3E8DDBFAB9ED1 /* PreferencesWindowController.swift */,
+				2920787F92F9700F70BF72C3 /* ScreenCaptureOverlayWindow.swift */,
+				B6B3172E46EEB0017AB1C0B9 /* SelectionView.swift */,
+				10D4170CFF9EAF1969828CAF /* Settings.swift */,
+				18EAAE4890272837662ED747 /* ToastController.swift */,
+				9566537F172F45A4154C72F9 /* VisionAnalyzer.swift */,
+				5CD8779A7FBA6001D93EE380 /* Resources */,
+			);
+			name = TextSnap;
+			path = Sources/TextSnap;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F1735013DBDF95F755A5A154 /* TextSnap */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6AFB3DF143895101A5AA44F7 /* Build configuration list for PBXNativeTarget "TextSnap" */;
+			buildPhases = (
+				975D41D2E34E723DF837FD25 /* Sources */,
+				960652F4C56E7C8037915AF3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TextSnap;
+			packageProductDependencies = (
+			);
+			productName = TextSnap;
+			productReference = 059955894FD110555452A9CA /* TextSnap.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9A30C61521537947664BB1AF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					F1735013DBDF95F755A5A154 = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C060E5A6BFDDFDA80C305D02 /* Build configuration list for PBXProject "TextSnap" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 425700A2E789DFC6C7EAD67A;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = C96245C751852F5DCCF54162 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F1735013DBDF95F755A5A154 /* TextSnap */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		960652F4C56E7C8037915AF3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B7527E6774F519AB62339F7 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		975D41D2E34E723DF837FD25 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4CB5610D2E0CEA31DBA2D760 /* AppDelegate.swift in Sources */,
+				9E2A0E32FFA667428035A198 /* CaptureController.swift in Sources */,
+				1BFFA5058F046893F4289F84 /* HotkeyManager.swift in Sources */,
+				9CCF08D8D710195F85D58291 /* MenuBarManager.swift in Sources */,
+				62E049D21CACA6C6D4748E91 /* PreferencesWindowController.swift in Sources */,
+				10FA499C21C91E69A4A00132 /* ScreenCaptureOverlayWindow.swift in Sources */,
+				ECBC0C3005EEA2B886D63BAC /* SelectionView.swift in Sources */,
+				4E2B7695D02D4B3E45EAC372 /* Settings.swift in Sources */,
+				04E83AF2B48B3A6A693C4269 /* ToastController.swift in Sources */,
+				9028522A13D52C4727EF5057 /* VisionAnalyzer.swift in Sources */,
+				EBE7D8D25B6B6C935CBFAB47 /* main.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		51D297D98B16A71A7532D2F1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		C7B9319DB843B3A9BCC89105 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/TextSnap/TextSnap.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Sources/TextSnap/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.textsnap.app;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		D402E3895D9A982229E32455 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		FBD4011511D582D6CBA625A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Sources/TextSnap/TextSnap.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = Sources/TextSnap/Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.textsnap.app;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6AFB3DF143895101A5AA44F7 /* Build configuration list for PBXNativeTarget "TextSnap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C7B9319DB843B3A9BCC89105 /* Debug */,
+				FBD4011511D582D6CBA625A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C060E5A6BFDDFDA80C305D02 /* Build configuration list for PBXProject "TextSnap" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D402E3895D9A982229E32455 /* Debug */,
+				51D297D98B16A71A7532D2F1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9A30C61521537947664BB1AF /* Project object */;
+}

@@ -1,0 +1,5 @@
+If macOS blocks TextSnap on first launch, run this in Terminal:
+
+    xattr -cr /Applications/TextSnap.app
+
+Then double-click the app normally.
