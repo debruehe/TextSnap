@@ -19,9 +19,12 @@ class PreferencesWindowController: NSWindowController {
         win.title = "TextSnap Preferences"
         win.center()
         super.init(window: win)
+        win.delegate = self
         buildUI()
     }
     required init?(coder: NSCoder) { fatalError() }
+
+    deinit { stopRecording() }
 
     private func buildUI() {
         guard let cv = window?.contentView else { return }
@@ -116,10 +119,18 @@ class PreferencesWindowController: NSWindowController {
             Settings.shared.captureCarbonModifiers = mods
             self.recordingHotkey = false
             self.refreshHotkeyTitle()
-            if let m = self.keyMonitor { NSEvent.removeMonitor(m); self.keyMonitor = nil }
+            self.stopRecording()
             NotificationCenter.default.post(name: .hotkeyChanged, object: nil)
             return nil
         }
+    }
+
+    private func stopRecording() {
+        if let m = keyMonitor {
+            NSEvent.removeMonitor(m)
+            keyMonitor = nil
+        }
+        recordingHotkey = false
     }
 
     @objc func resetHotkey() {
@@ -138,29 +149,8 @@ class PreferencesWindowController: NSWindowController {
     // MARK: – Helpers
 
     private func refreshHotkeyTitle() {
-        hotkeyButton.title = hotkeyString(
-            keyCode: Settings.shared.captureKeyCode,
-            carbonMods: Settings.shared.captureCarbonModifiers
-        )
+        hotkeyButton.title = Settings.shared.captureShortcutDisplay
     }
-
-    private func hotkeyString(keyCode: Int, carbonMods: Int) -> String {
-        var s = ""
-        if carbonMods & controlKey != 0 { s += "⌃" }
-        if carbonMods & optionKey  != 0 { s += "⌥" }
-        if carbonMods & shiftKey   != 0 { s += "⇧" }
-        if carbonMods & cmdKey     != 0 { s += "⌘" }
-        return s + (keyCodeName[keyCode] ?? "?")
-    }
-
-    private let keyCodeName: [Int: String] = [
-        0:"A",1:"S",2:"D",3:"F",4:"H",5:"G",6:"Z",7:"X",8:"C",9:"V",11:"B",
-        12:"Q",13:"W",14:"E",15:"R",16:"Y",17:"T",18:"1",19:"2",20:"3",21:"4",
-        22:"6",23:"5",24:"=",25:"9",26:"7",27:"-",28:"8",29:"0",30:"]",31:"O",
-        32:"U",33:"[",34:"I",35:"P",37:"L",38:"J",39:"'",40:"K",41:";",42:"\\",
-        43:",",44:"/",45:"N",46:"M",47:".",48:"⇥",49:"Space",51:"⌫",53:"⎋",
-        123:"←",124:"→",125:"↓",126:"↑"
-    ]
 
     private func label(_ str: String, font: NSFont, color: NSColor = .labelColor, frame: CGRect) -> NSTextField {
         let f = NSTextField(labelWithString: str)
@@ -168,6 +158,14 @@ class PreferencesWindowController: NSWindowController {
         f.font = font
         f.textColor = color
         return f
+    }
+}
+
+// MARK: – Window delegate
+
+extension PreferencesWindowController: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+        stopRecording()
     }
 }
 

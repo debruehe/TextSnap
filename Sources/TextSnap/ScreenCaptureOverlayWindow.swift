@@ -13,8 +13,6 @@ class ScreenCaptureOverlayWindow: NSWindow {
         let contentFrame = CGRect(origin: .zero, size: contentSize)
         self.selectionView = SelectionView(frame: contentFrame)
 
-        // Use the designated init (4-arg); pass screen.frame so the window
-        // lands on the correct display in global screen coordinates.
         super.init(
             contentRect: screen.frame,
             styleMask: .borderless,
