@@ -13,8 +13,6 @@ class ScreenCaptureOverlayWindow: NSWindow {
         let contentFrame = CGRect(origin: .zero, size: contentSize)
         self.selectionView = SelectionView(frame: contentFrame)
 
-        // Use the designated init (4-arg); pass screen.frame so the window
-        // lands on the correct display in global screen coordinates.
         super.init(
             contentRect: screen.frame,
             styleMask: .borderless,
@@ -48,7 +46,16 @@ class ScreenCaptureOverlayWindow: NSWindow {
     override var canBecomeMain: Bool { true }
 
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 53 { onCancelled?() } // ESC
+        if event.keyCode == 53 {
+            onCancelled?()
+            return
+        }
+        // Forward space and other keys to selection view
+        selectionView.keyDown(with: event)
+    }
+
+    override func keyUp(with event: NSEvent) {
+        selectionView.keyUp(with: event)
     }
 }
 

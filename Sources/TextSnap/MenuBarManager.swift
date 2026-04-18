@@ -40,7 +40,7 @@ class MenuBarManager {
     @objc func startCapture() { captureController.startCapture() }
     @objc func openPrefs() {
         PreferencesWindowController.shared.showWindow(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        NSApp.activate()
     }
     @objc func quit() { NSApp.terminate(nil) }
 }

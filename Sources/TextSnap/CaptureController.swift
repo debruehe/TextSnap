@@ -5,6 +5,12 @@ class CaptureController {
     private var overlayWindows: [ScreenCaptureOverlayWindow] = []
     private var isCapturing = false
 
+    /// Cache shareable content to avoid re-fetching on every capture.
+    /// Refreshed on error or when cache is stale.
+    private var cachedContent: SCShareableContent?
+    private var contentFetchTime: CFAbsoluteTime = 0
+    private let contentCacheTTL: CFTimeInterval = 30 // seconds
+
     func startCapture() {
         guard !isCapturing else { return }
         isCapturing = true
@@ -20,7 +26,7 @@ class CaptureController {
             w.makeKeyAndOrderFront(nil)
             return w
         }
-        NSApp.activate(ignoringOtherApps: true)
+        NSApp.activate()
     }
 
     // MARK: – Capture selected region
@@ -59,8 +65,19 @@ class CaptureController {
 
     // MARK: – SCScreenshotManager capture
 
-    private func captureRect(_ rect: CGRect, on screen: NSScreen) async throws -> CGImage {
+    private func getContent() async throws -> SCShareableContent {
+        let now = CFAbsoluteTimeGetCurrent()
+        if let cached = cachedContent, (now - contentFetchTime) < contentCacheTTL {
+            return cached
+        }
         let content = try await SCShareableContent.current
+        cachedContent = content
+        contentFetchTime = now
+        return content
+    }
+
+    private func captureRect(_ rect: CGRect, on screen: NSScreen) async throws -> CGImage {
+        let content = try await getContent()
 
         guard let display = content.displays.first(where: { $0.displayID == screen.displayID }) else {
             throw CaptureError.displayNotFound
@@ -84,7 +101,23 @@ class CaptureController {
         cfg.scalesToFit = false
         cfg.showsCursor = false
 
-        return try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: cfg)
+        do {
+            return try await SCScreenshotManager.captureImage(contentFilter: filter, configuration: cfg)
+        } catch {
+            // On failure, invalidate cache and retry once
+            cachedContent = nil
+            let freshContent = try await SCShareableContent.current
+            cachedContent = freshContent
+            contentFetchTime = CFAbsoluteTimeGetCurrent()
+
+            guard let display = freshContent.displays.first(where: { $0.displayID == screen.displayID }) else {
+                throw CaptureError.displayNotFound
+            }
+            let freshFilter = SCContentFilter(display: display, excludingApplications: freshContent.applications.filter {
+                $0.bundleIdentifier == Bundle.main.bundleIdentifier
+            }, exceptingWindows: [])
+            return try await SCScreenshotManager.captureImage(contentFilter: freshFilter, configuration: cfg)
+        }
     }
 
     // MARK: – Helpers
