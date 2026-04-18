@@ -11,6 +11,7 @@ class SelectionView: NSView {
     private var spaceHeld = false
     private var lockedRect: CGRect = .zero
     private var moveAnchor: NSPoint = .zero
+    private var justExitedMoveMode = false
 
     private var selectionRect: CGRect {
         guard let s = startPoint, let c = currentPoint else { return .zero }
@@ -37,6 +38,7 @@ class SelectionView: NSView {
         currentPoint = startPoint
         isDragging = true
         moveMode = false
+        justExitedMoveMode = false
         needsDisplay = true
     }
 
@@ -57,10 +59,17 @@ class SelectionView: NSView {
             let newY = max(0, min(lockedRect.origin.y + dy, bounds.height - lockedRect.height))
             lockedRect.origin = CGPoint(x: newX, y: newY)
             moveAnchor = p
-            // Keep startPoint/currentPoint consistent for exit
             startPoint = CGPoint(x: lockedRect.minX, y: lockedRect.minY)
             currentPoint = CGPoint(x: lockedRect.maxX, y: lockedRect.maxY)
         } else {
+            if justExitedMoveMode {
+                justExitedMoveMode = false
+                // Re-anchor: start fresh resize from cursor against opposite corner
+                let r = selectionRect
+                let oppX = (p.x - r.midX) >= 0 ? r.minX : r.maxX
+                let oppY = (p.y - r.midY) >= 0 ? r.minY : r.maxY
+                startPoint = CGPoint(x: oppX, y: oppY)
+            }
             currentPoint = p
         }
 
@@ -99,6 +108,7 @@ class SelectionView: NSView {
             spaceHeld = false
             if moveMode {
                 moveMode = false
+                justExitedMoveMode = true
             }
             return
         }
