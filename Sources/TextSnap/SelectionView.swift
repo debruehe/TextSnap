@@ -4,15 +4,20 @@ class SelectionView: NSView {
     var onSelectionComplete: ((CGRect) -> Void)?
     var onCancelled: (() -> Void)?
 
-    private var selOrigin: NSPoint?
-    private var selSize: NSSize = .zero
+    private var startPoint: NSPoint?
+    private var currentPoint: NSPoint?
     private var isDragging = false
     private var moveMode = false
+    private var spaceHeld = false
+    private var lockedRect: CGRect = .zero
     private var moveAnchor: NSPoint = .zero
 
     private var selectionRect: CGRect {
-        guard let o = selOrigin else { return .zero }
-        return CGRect(origin: o, size: selSize)
+        guard let s = startPoint, let c = currentPoint else { return .zero }
+        return CGRect(
+            x: min(s.x, c.x), y: min(s.y, c.y),
+            width: abs(c.x - s.x), height: abs(c.y - s.y)
+        )
     }
 
     override init(frame: NSRect) {
@@ -28,9 +33,8 @@ class SelectionView: NSView {
     // MARK: – Mouse events
 
     override func mouseDown(with event: NSEvent) {
-        let p = convert(event.locationInWindow, from: nil)
-        selOrigin = p
-        selSize = .zero
+        startPoint = convert(event.locationInWindow, from: nil)
+        currentPoint = startPoint
         isDragging = true
         moveMode = false
         needsDisplay = true
@@ -38,37 +42,33 @@ class SelectionView: NSView {
 
     override func mouseDragged(with event: NSEvent) {
         let p = convert(event.locationInWindow, from: nil)
-        let shiftHeld = event.modifierFlags.contains(.shift)
 
-        if shiftHeld && !moveMode && selSize.width > 1 && selSize.height > 1 {
-            // Enter move mode — lock current rect, set anchor at cursor
+        if spaceHeld && !moveMode && selectionRect.width > 1 && selectionRect.height > 1 {
+            // Enter move mode
             moveMode = true
+            lockedRect = selectionRect
             moveAnchor = p
         }
 
         if moveMode {
-            // Move the entire selection by cursor delta
             let dx = p.x - moveAnchor.x
             let dy = p.y - moveAnchor.y
-            let newX = max(0, min(selOrigin!.x + dx, bounds.width - selSize.width))
-            let newY = max(0, min(selOrigin!.y + dy, bounds.height - selSize.height))
-            selOrigin = CGPoint(x: newX, y: newY)
+            let newX = max(0, min(lockedRect.origin.x + dx, bounds.width - lockedRect.width))
+            let newY = max(0, min(lockedRect.origin.y + dy, bounds.height - lockedRect.height))
+            lockedRect.origin = CGPoint(x: newX, y: newY)
             moveAnchor = p
+            // Keep startPoint/currentPoint consistent for exit
+            startPoint = CGPoint(x: lockedRect.minX, y: lockedRect.minY)
+            currentPoint = CGPoint(x: lockedRect.maxX, y: lockedRect.maxY)
         } else {
-            // Normal resize — expand from origin to cursor
-            let sx = min(selOrigin!.x, p.x)
-            let sy = min(selOrigin!.y, p.y)
-            let sw = abs(p.x - selOrigin!.x)
-            let sh = abs(p.y - selOrigin!.y)
-            selOrigin = CGPoint(x: sx, y: sy)
-            selSize = NSSize(width: sw, height: sh)
-            moveMode = false
+            currentPoint = p
         }
 
         needsDisplay = true
     }
 
     override func mouseUp(with event: NSEvent) {
+        currentPoint = convert(event.locationInWindow, from: nil)
         isDragging = false
         moveMode = false
         needsDisplay = true
@@ -78,12 +78,31 @@ class SelectionView: NSView {
         onSelectionComplete?(rect)
     }
 
-    override func flagsChanged(with event: NSEvent) {
-        // If shift is released while dragging, snap back to resize mode
-        if isDragging && moveMode && !event.modifierFlags.contains(.shift) {
-            moveMode = false
+    // MARK: – Space bar tracking (key events, since flagsChanged doesn't fire for space)
+
+    override var acceptsFirstResponder: Bool { true }
+
+    override func keyDown(with event: NSEvent) {
+        if event.keyCode == 49 { // space
+            spaceHeld = true
+            return
         }
-        needsDisplay = true
+        if event.keyCode == 53 { // ESC
+            onCancelled?()
+            return
+        }
+        super.keyDown(with: event)
+    }
+
+    override func keyUp(with event: NSEvent) {
+        if event.keyCode == 49 {
+            spaceHeld = false
+            if moveMode {
+                moveMode = false
+            }
+            return
+        }
+        super.keyUp(with: event)
     }
 
     // MARK: – Drawing
@@ -92,7 +111,7 @@ class SelectionView: NSView {
         let dim = NSColor.black.withAlphaComponent(0.45)
         let rect = selectionRect
 
-        if isDragging || (selOrigin != nil && rect.width > 1 && rect.height > 1) {
+        if isDragging || (startPoint != nil && rect.width > 1 && rect.height > 1) {
             // Draw dim in four strips around the selection
             dim.setFill()
             [
@@ -102,16 +121,14 @@ class SelectionView: NSView {
                 CGRect(x: rect.maxX, y: rect.minY, width: bounds.maxX - rect.maxX, height: rect.height)
             ].forEach { NSBezierPath(rect: $0).fill() }
 
-            // Selection border — dashed when in move mode
+            // Selection border — dashed in move mode
             let border = NSBezierPath(rect: rect.insetBy(dx: 0.75, dy: 0.75))
             border.lineWidth = 1.5
-            if moveMode {
-                border.setLineDash([6, 3], count: 2, phase: 0)
-            }
+            if moveMode { border.setLineDash([6, 3], count: 2, phase: 0) }
             NSColor.white.setStroke()
             border.stroke()
 
-            if !moveMode, let cp = currentPoint(for: rect) {
+            if !moveMode, let cp = currentPoint {
                 drawCrosshairs(at: cp, excluding: rect)
             }
             drawHandles(in: rect)
@@ -119,7 +136,6 @@ class SelectionView: NSView {
             if moveMode { drawMoveBadge(in: rect) }
             drawEscHint()
         } else {
-            // No selection yet — full dim + hint
             dim.setFill()
             NSBezierPath(rect: bounds).fill()
             drawHint()
@@ -128,11 +144,6 @@ class SelectionView: NSView {
                 drawCrosshairLines(at: cp)
             }
         }
-    }
-
-    private func currentPoint(for rect: CGRect) -> NSPoint? {
-        // Approximate cursor position from the rect (bottom-right corner during resize)
-        return moveMode ? nil : CGPoint(x: rect.maxX, y: rect.minY)
     }
 
     // MARK: – Crosshair guide lines
@@ -206,7 +217,7 @@ class SelectionView: NSView {
     // MARK: – Move badge
 
     private func drawMoveBadge(in rect: CGRect) {
-        let text = "⇧ move"
+        let text = "space · move"
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.monospacedSystemFont(ofSize: 10, weight: .medium),
             .foregroundColor: NSColor.white.withAlphaComponent(0.70)
@@ -225,7 +236,7 @@ class SelectionView: NSView {
 
     private func drawHint() {
         let shortcut = Settings.shared.captureShortcutDisplay
-        let text = "Drag to select  •  hold ⇧ to move  •  \(shortcut) capture  •  ESC cancel"
+        let text = "Drag to select  •  hold space to move  •  \(shortcut) capture  •  ESC cancel"
         let attrs: [NSAttributedString.Key: Any] = [
             .font: NSFont.systemFont(ofSize: 12, weight: .medium),
             .foregroundColor: NSColor.white.withAlphaComponent(0.80)

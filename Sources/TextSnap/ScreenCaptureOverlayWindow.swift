@@ -46,7 +46,16 @@ class ScreenCaptureOverlayWindow: NSWindow {
     override var canBecomeMain: Bool { true }
 
     override func keyDown(with event: NSEvent) {
-        if event.keyCode == 53 { onCancelled?() } // ESC
+        if event.keyCode == 53 {
+            onCancelled?()
+            return
+        }
+        // Forward space and other keys to selection view
+        selectionView.keyDown(with: event)
+    }
+
+    override func keyUp(with event: NSEvent) {
+        selectionView.keyUp(with: event)
     }
 }
 
