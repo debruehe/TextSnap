@@ -3,6 +3,7 @@ import AppKit
 class SelectionView: NSView {
     var onSelectionComplete: ((CGRect) -> Void)?
     var onCancelled: (() -> Void)?
+    var backgroundImage: CGImage?
 
     private var startPoint: NSPoint?
     private var currentPoint: NSPoint?
@@ -118,6 +119,10 @@ class SelectionView: NSView {
     // MARK: – Drawing
 
     override func draw(_ dirtyRect: NSRect) {
+        if let bg = backgroundImage {
+            NSImage(cgImage: bg, size: bounds.size).draw(in: bounds)
+        }
+
         let dim = NSColor.black.withAlphaComponent(0.45)
         let rect = selectionRect
 
@@ -291,7 +296,7 @@ class SelectionView: NSView {
         super.updateTrackingAreas()
         trackingAreas.forEach { removeTrackingArea($0) }
         let area = NSTrackingArea(rect: bounds,
-                                  options: [.mouseMoved, .activeInKeyWindow, .inVisibleRect],
+                                  options: [.mouseMoved, .activeAlways, .inVisibleRect],
                                   owner: self, userInfo: nil)
         addTrackingArea(area)
     }
