@@ -34,6 +34,9 @@ class SelectionView: NSView {
 
     // MARK: – Mouse events
 
+    override var acceptsFirstResponder: Bool { true }
+    override func acceptsFirstMouse(for event: NSEvent?) -> Bool { return true }
+
     override func mouseDown(with event: NSEvent) {
         startPoint = convert(event.locationInWindow, from: nil)
         currentPoint = startPoint
@@ -89,8 +92,6 @@ class SelectionView: NSView {
     }
 
     // MARK: – Space bar tracking (key events, since flagsChanged doesn't fire for space)
-
-    override var acceptsFirstResponder: Bool { true }
 
     override func keyDown(with event: NSEvent) {
         if event.keyCode == 49 { // space
